@@ -1,0 +1,83 @@
+config:
+  target: "https://api.todoist.com"
+  phases:
+    - duration: 5
+      arrivalRate: 2
+      name: "Phase 1"
+  defaults:
+   headers:
+     Authorization: Bearer cc1de23216f905ff837a61df35fea928cc02dc46
+     #Authorization: Bearer {{ $processEnvironment.TOKEN }}
+     Content-type: application/json
+  #processor: "./myProcessor.js"
+scenarios:
+  - flow:
+
+      #Get active tasks
+      - get:
+          url: "/rest/v1/tasks"
+
+      #Create a new task
+      - post:
+          url: "/rest/v1/tasks"
+          json:
+            content: "drink water"
+            due_string: "tomorrow at 12:00"
+            due_lang: "en"
+            priority: 4
+          capture:
+            json: "$.id"
+            as: "taskId"
+      - log: "Current taskId is {{ taskId }}"  
+
+      #Get an active task
+      - get:
+          url: "/rest/v1/tasks/{{ taskId }}"
+
+      #Update a task
+      - post:
+          url: "/rest/v1/tasks/{{ taskId }}"
+          json:
+            content: "Buy Coffee"
+
+      #Change a task status to 'complete'
+      - post:
+          url: "/rest/v1/tasks/{{ taskId }}/close"
+
+      #Reopen a task
+      - post:
+          url: "/rest/v1/tasks/{{ taskId }}/reopen"
+
+      #Delete a task
+      - delete:
+          url: "/rest/v1/tasks/{{ taskId }}"
+
+      #Get all projects
+      - get:  
+          url: "/rest/v1/projects"
+
+      #create a new project
+      - post: 
+          url: "/rest/v1/projects"    
+          json:
+            name: "Demo"
+          capture:
+            json: "$.id"
+            as: "id"
+      - log: "Current id is {{ id }}"
+
+      #Get a project
+      - get:
+          url: "/rest/v1/projects/{{ id }}"
+
+      #Update a project
+      - post:
+          url: "/rest/v1/projects/{{ id }}"    
+          json:
+            name: "Wizeline 2"
+
+      #Delete a project
+      - delete:
+            url: "/rest/v1/projects/{{ id }}"
+  # For more information: https://artillery.io/docs/script-reference/
+# For more information: https://artillery.io/docs/script-reference/

@@ -16,3 +16,7 @@ Artillery BasicConfig
 Authorization and Content-type
 
 #Execute test and generate JSON report
+export TOKEN="token" (Settings > Integrations > API token)
+
+#Adding scenarios (using the plugin)
+CRUD
