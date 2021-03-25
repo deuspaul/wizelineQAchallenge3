@@ -1,5 +1,6 @@
 # Credentials #
 setenv.sh 
+.env
 
 # Compiled source #
 ###################
@@ -14,6 +15,7 @@ setenv.sh
 ############
 # it's better to unpack these files and commit the raw source
 # git has its own built in compression methods
+node_modules/
 *.7z
 *.dmg
 *.gz
