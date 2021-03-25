@@ -6,8 +6,7 @@ config:
       name: "Phase 1"
   defaults:
    headers:
-     Authorization: Bearer cc1de23216f905ff837a61df35fea928cc02dc46
-     #Authorization: Bearer {{ $processEnvironment.TOKEN }}
+     Authorization: Bearer {{ $processEnvironment.TOKEN }}
      Content-type: application/json
   #processor: "./myProcessor.js"
 scenarios:
