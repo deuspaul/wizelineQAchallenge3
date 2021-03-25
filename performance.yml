@@ -1,5 +1,6 @@
 config:
   target: "https://api.todoist.com"
+  processor: "./faker.js"
   phases:
     - duration: 5
       arrivalRate: 2
@@ -8,7 +9,7 @@ config:
    headers:
      Authorization: Bearer {{ $processEnvironment.TOKEN }}
      Content-type: application/json
-  #processor: "./myProcessor.js"
+  
 scenarios:
   - flow:
 
@@ -17,11 +18,12 @@ scenarios:
           url: "/rest/v1/tasks"
 
       #Create a new task
+      - function: createTask
       - post:
           url: "/rest/v1/tasks"
           json:
-            content: "drink water"
-            due_string: "tomorrow at 12:00"
+            content: "{{content}}"
+            due_string: "{{due}}"
             due_lang: "en"
             priority: 4
           capture:
